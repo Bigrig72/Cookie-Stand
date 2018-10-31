@@ -1,7 +1,8 @@
 'use strict';
 
-var myStores = ['1st and Pike ', 'SeaTac Airport ', 'Seattle Center ', 'Capitol Hill ', 'Alki '];
+// var myStores = ['1st and Pike ', 'SeaTac Airport ', 'Seattle Center ', 'Capitol Hill ', 'Alki '];
 var hours = ['6 A.M. ', '7 A.M. ', '8 A.M. ', '9 A.M. ', '10 A.M. ', '11 A.M. ', '12 P.M. ', '1 P.M. ', '2 P.M. ', '3 P.M. ', '4 P.M. ', '5 P.M. ', '6 P.M. ', '7 P.M. ', '8 P.M. '];
+
 var stores = [];
 
 function Store(name, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer) {
@@ -11,9 +12,10 @@ function Store(name, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustom
   this.name = name;
   this.cookiesPerHourArr = [];
   this.totalDailyCookies = 0;
+  this.globalTotalCookies = 0;
 
   stores.push(this);
-  this.render();
+   this.render();
 
 }
 
@@ -23,15 +25,25 @@ Store.prototype.cookiesPerHour = function () {
   for (var i = 0; i < hours.length; i++) {
     console.log('inside for loop at ' + i);
 
+    // getting random amount of customers between two numbers min and max
+
     var numOfCustomers = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1))
     console.log(numOfCustomers);
 
+    // getting number of cookies
+
     var numOfCookies = Math.floor(numOfCustomers * this.avgCookiesPerCustomer);
     console.log(numOfCookies);
+
     this.cookiesPerHourArr.push(numOfCookies);
 
     this.totalDailyCookies += numOfCookies;
+    
   }
+  this.cookiesPerHourArr.push(this.totalDailyCookies);
+  console.log(this.totalDailyCookies);
+  console.log(this.cookiesPerHourArr);
+
 };
 
 
@@ -81,15 +93,23 @@ function createTable() {
   var emptyTableHead = document.createElement('th');
   tableHeaderRow.appendChild(emptyTableHead);
 
+  
+
+
   //remainder of table heads are store hours
   for (var i = 0; i < hours.length; i++) {
 
     var tableHead = document.createElement('th');
-    tableHead.textContent = hours[i];
+    tableHead.textContent = hours[i];  // possibly + global
     tableHeaderRow.appendChild(tableHead);
   }
 
   tableHeader.appendChild(tableHeaderRow);
+
+    // Last table head is the total
+    var global = document.createElement('th')
+    global.textContent = 'Total';
+    tableHeaderRow.appendChild(global);
 
 }
 
@@ -98,6 +118,7 @@ function createFooter(){
   var tableBody = document.getElementById('tbl-body');
   var totalRow = document.createElement('tr');
   var tdTotalsLabel = document.createElement('td');
+  var totalCookiesPerDay = 0;
   tdTotalsLabel.textContent = 'Totals';
   totalRow.appendChild(tdTotalsLabel);
 
@@ -109,12 +130,19 @@ function createFooter(){
     for (var j = 0; j < stores.length; j++) {
       totalCookiesPerHour += stores[j].cookiesPerHourArr[i];
     }
+    totalCookiesPerDay += totalCookiesPerHour;
+    
     var tdTotalcookies = document.createElement('td');
     tdTotalcookies.textContent = totalCookiesPerHour;
     totalRow.appendChild(tdTotalcookies);
+  
   }
-
+  var dailyTotalEl = document.createElement('td');
+  dailyTotalEl.textContent = totalCookiesPerDay;
+  totalRow.appendChild(dailyTotalEl);
   tableBody.appendChild(totalRow);
+
+
 }
 
 createTable();
