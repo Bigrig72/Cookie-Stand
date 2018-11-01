@@ -12,10 +12,10 @@ function Store(name, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustom
   this.name = name;
   this.cookiesPerHourArr = [];
   this.totalDailyCookies = 0;
-  this.globalTotalCookies = 0;
+
 
   stores.push(this);
-   this.render();
+  this.render();
 
 }
 
@@ -38,7 +38,7 @@ Store.prototype.cookiesPerHour = function () {
     this.cookiesPerHourArr.push(numOfCookies);
 
     this.totalDailyCookies += numOfCookies;
-    
+
   }
   this.cookiesPerHourArr.push(this.totalDailyCookies);
   console.log(this.totalDailyCookies);
@@ -93,30 +93,31 @@ function createTable() {
   var emptyTableHead = document.createElement('th');
   tableHeaderRow.appendChild(emptyTableHead);
 
-  
+
 
 
   //remainder of table heads are store hours
   for (var i = 0; i < hours.length; i++) {
 
     var tableHead = document.createElement('th');
-    tableHead.textContent = hours[i];  // possibly + global
+    tableHead.textContent = hours[i];
     tableHeaderRow.appendChild(tableHead);
   }
 
   tableHeader.appendChild(tableHeaderRow);
 
-    // Last table head is the total
-    var global = document.createElement('th')
-    global.textContent = 'Total';
-    tableHeaderRow.appendChild(global);
+  // Last table head is the total
+  var global = document.createElement('th')
+  global.textContent = 'Total';
+  tableHeaderRow.appendChild(global);
 
 }
 
-function createFooter(){
+function createFooter() {
   //footer (alignment didn't look right when I used tbl-foot so I changed to tbl-body...why didn't tbl-foot work??)
   var tableBody = document.getElementById('tbl-body');
   var totalRow = document.createElement('tr');
+  totalRow.setAttribute('id', 'totalRow'); //need this to delete the total row and recreate if new store is added
   var tdTotalsLabel = document.createElement('td');
   var totalCookiesPerDay = 0;
   tdTotalsLabel.textContent = 'Totals';
@@ -131,11 +132,11 @@ function createFooter(){
       totalCookiesPerHour += stores[j].cookiesPerHourArr[i];
     }
     totalCookiesPerDay += totalCookiesPerHour;
-    
-    var tdTotalcookies = document.createElement('td');
-    tdTotalcookies.textContent = totalCookiesPerHour;
-    totalRow.appendChild(tdTotalcookies);
-  
+
+    var tdTotalCookies = document.createElement('td');
+    tdTotalCookies.textContent = totalCookiesPerHour;
+    totalRow.appendChild(tdTotalCookies);
+
   }
   var dailyTotalEl = document.createElement('td');
   dailyTotalEl.textContent = totalCookiesPerDay;
@@ -157,3 +158,44 @@ new Store('Alki', 30, 75, 8.3);
 createFooter();
 
 console.log(stores);
+
+
+var locationForm = document.getElementById('location-form');
+locationForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+
+  var locationInput = event.target.locationInput.value;
+  var minInput = event.target.minInput.value;
+  var maxInput = event.target.maxInput.value;
+  var avgCookiesInput = event.target.avgCookiesInput.value;
+
+  //delete total row
+  var totalRow = document.getElementById('totalRow');
+  totalRow.parentNode.removeChild(totalRow);
+
+  //create new store
+  new Store(locationInput, minInput, maxInput, avgCookiesInput);
+
+  //recreate footer with the new store that's been added
+  createFooter();
+  
+  console.log(stores);
+
+  event.target.locationInput.value = '';
+  event.target.minInput.value = '';
+  event.target.maxInput.value = '';
+  event.target.avgCookiesInput.value = '';
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
