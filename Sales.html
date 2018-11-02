@@ -6,33 +6,69 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Salmon Cookie Stand</title>
+  <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="sales">
   <header>
-    <h1>Salmon Cookie Stand</h1>
-
+    <h1>Salmon Cookie Sales </h1>
+    <h3>View & Update Cookie Sales Per Store</h3>
   </header>
 
   <main id="main-content">
-    <form id="location-form"> 
+
+    <nav>
+      <ul>
+        <li> <img src="salmon.png"></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="https://en.wikipedia.org/wiki/Salmon" target="_blank">learn about salmon</a></li>
+        <li> <img src="salmon.png"></li>
+      </ul>
+    </nav>
+
+    <form id="location-form">
       <fieldset>
-        Location name: <input name="locationInput" type="text">
-        Average cookies purchased: <input name="avgCookiesInput" type="number"><br>
-        Minimum Customers: <input name="minInput" type="number"><br>
-        Maximum Customers: <input name="maxInput" type="number"><br>
+        
+        <label>
+          Location name:
+          <input name="locationInput" type="text">
+        </label>
+        
+        <br>
+        
+        <label>
+          Average cookies purchased:
+          <input name="avgCookiesInput" type="number">
+        </label>
+        
+        <br>
+        
+        <label>
+          Minimum Customers:
+          <input name="minInput" type="number">
+        </label>
+
+        <br>
+        
+        <label>
+          Maximum Customers:
+          <input name="maxInput" type="number">
+        </label>
+
+        <br>
+
         <button id="submit" type="submit">Submit</button>
-        </fieldset>
+
+      </fieldset>
     </form>
 
   </main>
 
   <footer>
-
+      <p>Copyright &copy; 2018 Regan Dufort</p>
+    <script src="app.js"></script>
   </footer>
 
-  <script src="app.js"></script>
 </body>
-
 </html>

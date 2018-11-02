@@ -1,7 +1,7 @@
 'use strict';
 
 // var myStores = ['1st and Pike ', 'SeaTac Airport ', 'Seattle Center ', 'Capitol Hill ', 'Alki '];
-var hours = ['6 A.M. ', '7 A.M. ', '8 A.M. ', '9 A.M. ', '10 A.M. ', '11 A.M. ', '12 P.M. ', '1 P.M. ', '2 P.M. ', '3 P.M. ', '4 P.M. ', '5 P.M. ', '6 P.M. ', '7 P.M. ', '8 P.M. '];
+var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 
 var stores = [];
 
@@ -113,11 +113,13 @@ function createTable() {
 
 }
 
-function createFooter() {
+function createFooterRow() {
   //footer (alignment didn't look right when I used tbl-foot so I changed to tbl-body...why didn't tbl-foot work??)
   var tableBody = document.getElementById('tbl-body');
   var totalRow = document.createElement('tr');
+
   totalRow.setAttribute('id', 'totalRow'); //need this to delete the total row and recreate if new store is added
+
   var tdTotalsLabel = document.createElement('td');
   var totalCookiesPerDay = 0;
   tdTotalsLabel.textContent = 'Totals';
@@ -155,7 +157,7 @@ new Store('Seattle', 15, 69, 7.3);
 new Store('Capital Hill', 35, 45, 5.2);
 new Store('Alki', 30, 75, 8.3);
 
-createFooter();
+createFooterRow();
 
 console.log(stores);
 
@@ -177,7 +179,7 @@ locationForm.addEventListener('submit', function (event) {
   new Store(locationInput, minInput, maxInput, avgCookiesInput);
 
   //recreate footer with the new store that's been added
-  createFooter();
+  createFooterRow();
   
   console.log(stores);
 
